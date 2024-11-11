@@ -1,0 +1,10 @@
+.accommodation__description::before {
+  content: "";
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  background-repeat: no-repeat;
+  left: 0;
+  top: 10px;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='24' height='24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg clip-path='url(%23a)'%3E%3Cpath fill='%23505557' fill-rule='evenodd' d='M4.5.375a2.25 2.25 0 00-2.25 2.25v4.813A3.75 3.75 0 000 10.875v5.25a.75.75 0 001.5 0v-2.25h6.75a.75.75 0 000-1.5H1.5v-1.5a2.25 2.25 0 012.25-2.25H18a.75.75 0 00.75-.75v-5.25A2.25 2.25 0 0016.5.375zm8.25 6.75h-4.5v-1.25a.25.25 0 01.25-.25h4a.25.25 0 01.25.25zm1.5-1.25v1.25h3v-4.5a.75.75 0 00-.75-.75h-12a.75.75 0 00-.75.75v4.5h3v-1.25a1.75 1.75 0 011.75-1.75h4a1.75 1.75 0 011.75 1.75m-2.25 11a5.25 5.25 0 1110.5 0 5.25 5.25 0 01-10.5 0m5.25-6.75a6.75 6.75 0 100 13.5 6.75 6.75 0 000-13.5m0 3a.75.75 0 01.75.75v2.25h2.25a.75.75 0 010 1.5H18v2.25a.75.75 0 01-1.5 0v-2.25h-2.25a.75.75 0 010-1.5h2.25v-2.25a.75.75 0 01.75-.75' clip-rule='evenodd'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='a'%3E%3Cpath fill='%23fff' d='M0 0h24v24H0z'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E");
+}

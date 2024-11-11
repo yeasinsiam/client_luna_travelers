@@ -10,16 +10,99 @@ export default function BookingPage() {
   const [showPromoCodeBox, setShowPromoCodeBox] = useState(false);
   return (
     <Layout headerLayout={2}>
-      <div className="container py-20">
+      <div className="container py-10">
         <div>
-          <h3 className="text-xl font-bold leading-normal">
+          <h3 className="text-2xl font-bold leading-normal">
             2027 Total Solar Eclipse in Egypt - 8 days - All Inclusive
           </h3>
         </div>
 
-        <div className="grid grid-cols-12 mt-10">
+        <div className="grid grid-cols-12 gap-10 mt-10 ">
+          <div className="flex flex-col order-1 col-span-12 gap-5 lg:order-2 lg:col-span-5">
+            {/* Trip information */}
+            <div className="p-6 bg-white border border-gray-300 rounded-md shadow-lg">
+              <h4 class="text-lg font-bold leading-normal">My Trip</h4>
+              <div className="mt-5 space-y-2">
+                <div className="flex flex-col">
+                  <h5 class="text-sm font-semibold  leading-normal">
+                    2027 Total Solar Eclipse in Egypt - 8 days - All Inclusive
+                  </h5>
+                  <span className="text-sm text-gray-500">8 days</span>
+                </div>
+                <div className="flex flex-col">
+                  <h5 class="text-sm font-semibold  leading-normal">
+                    Starts in Cairo, Egypt
+                  </h5>
+                  <span className="text-sm text-gray-500">
+                    Thursday, 29 Jul 2027
+                  </span>
+                </div>
+                <div className="flex flex-col">
+                  <h5 class="text-sm font-semibold  leading-normal">
+                    Ends in Cairo, Egypt{" "}
+                  </h5>
+                  <span className="text-sm text-gray-500">
+                    Thursday, 5 Aug 2027
+                  </span>
+                </div>
+                <div className="flex flex-col">
+                  <h5 class="text-sm font-semibold  leading-normal">
+                    Tour Type{" "}
+                  </h5>
+                  <span className="text-sm text-gray-500">Group</span>
+                </div>
+                <div className="flex flex-col">
+                  <h5 class="text-sm font-semibold  leading-normal">
+                    Operated in{" "}
+                  </h5>
+                  <span className="text-sm text-gray-500">English</span>
+                </div>
+                <div className="flex flex-col">
+                  <h5 class="text-sm font-semibold  leading-normal">
+                    What{"'"}s included{" "}
+                  </h5>
+                  <span className="text-sm text-gray-500">
+                    Flights, Guide, Insurance, Meals, Transport{" "}
+                  </span>
+                </div>
+              </div>
+              {/* Starts in Cairo, Egypt */}
+            </div>
+
+            {/* Price Breakdown */}
+            <div className="p-6 bg-white border border-gray-300 rounded-md shadow-lg lg:sticky lg:top-24">
+              <h4 class="text-lg font-bold leading-normal">Price Breakdown</h4>
+              <div className="flex items-start gap-2 p-3 mt-5 bg-indigo-100 rounded-lg lg:items-center">
+                <BsExclamationCircle className="flex-shrink-0 text-2xl fill-indigo-500" />
+                <p>
+                  Select the number of travellers and assign accommodation to
+                  display the price.
+                </p>
+              </div>
+
+              <div className="mt-5">
+                <div className="flex justify-between pb-5 border-b">
+                  <div className="flex flex-col">
+                    <h3>Single Room</h3>
+                    <span className="text-sm text-gray-500">
+                      1 Adult x $9,730.25
+                    </span>
+                  </div>
+                  <div>
+                    <span>$9,730.25</span>
+                  </div>
+                </div>
+
+                <div className="flex justify-between mt-5">
+                  <h3 className="text-lg">Single Room</h3>
+                  <h2 className="text-lg font-semibold">US$9,730.25</h2>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Booking steps */}
-          <div className="flex flex-col col-span-12 gap-5 lg:col-span-7">
+          <div className="flex flex-col order-2 col-span-12 gap-5 lg:order-1 lg:col-span-7">
             {/* Step 1 {select adult and child} */}
             <div className="p-6 bg-white border border-gray-300 rounded-md shadow-lg dark:bg-slate-900 dark:shadow-gray-800">
               <div className="flex items-center gap-3">
@@ -236,7 +319,7 @@ export default function BookingPage() {
               </div>
 
               <div className="flex mt-5">
-                <div className="flex flex-col w-2/4 gap-3">
+                <div className="flex flex-col w-2/4 gap-3 lg:w-full">
                   <div className="">
                     <label className="font-semibold">First Name*:</label>
                     <input
@@ -338,7 +421,7 @@ export default function BookingPage() {
                     <div>
                       <button
                         type="button"
-                        className="w-full px-3 py-2 text-white bg-red-500 rounded-lg lg:w-auto "
+                        className="w-full px-3 py-[6px] text-white bg-red-500 rounded-lg lg:w-auto "
                       >
                         Apply
                       </button>

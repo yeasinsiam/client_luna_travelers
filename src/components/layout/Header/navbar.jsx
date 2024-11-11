@@ -82,18 +82,18 @@ export default function Navbar({ navclass, navlight, manuclass }) {
         )}
         {!navlight && (
           <Link className="logo" href="/">
-            <div>
+            {/* <div>
               <Image
                 src={logoDark}
-                className="h-7 inline-block dark:hidden"
+                className="inline-block h-7 dark:hidden"
                 alt=""
               />
               <Image
                 src={logoWhite}
-                className="h-7 hidden dark:inline-block"
+                className="hidden h-7 dark:inline-block"
                 alt=""
               />
-            </div>
+            </div> */}
           </Link>
         )}
 
@@ -114,27 +114,27 @@ export default function Navbar({ navclass, navlight, manuclass }) {
           </div>
         </div>
 
-        <ul className="buy-button list-none mb-0 space-x-1">
+        {/* <ul className="mb-0 space-x-1 list-none buy-button">
           {navlight === true ? (
             <li
-              className="dropdown inline-block relative pe-1"
+              className="relative inline-block dropdown pe-1"
               ref={dropdownRef}
             >
               <button
-                className="dropdown-toggle align-middle inline-flex search-dropdown"
+                className="inline-flex align-middle dropdown-toggle search-dropdown"
                 type="button"
                 onClick={() => setIsOpen(!isOpen)}
               >
                 <FiSearch className="size-5 dark-icon"></FiSearch>
-                <FiSearch className="size-5 white-icon text-white"></FiSearch>
+                <FiSearch className="text-white size-5 white-icon"></FiSearch>
               </button>
               {isOpen && (
-                <div className="dropdown-menu absolute overflow-hidden end-0 m-0 mt-5 z-10 md:w-52 w-48 rounded-md bg-white dark:bg-slate-900 shadow dark:shadow-gray-800">
+                <div className="absolute z-10 w-48 m-0 mt-5 overflow-hidden bg-white rounded-md shadow dropdown-menu end-0 md:w-52 dark:bg-slate-900 dark:shadow-gray-800">
                   <div className="relative">
                     <FiSearch className="size-4 absolute top-[9px] end-3"></FiSearch>
                     <input
                       type="text"
-                      className="h-9 px-3 pe-10 w-full border-0 focus:ring-0 outline-none bg-white dark:bg-slate-900"
+                      className="w-full px-3 bg-white border-0 outline-none h-9 pe-10 focus:ring-0 dark:bg-slate-900"
                       name="s"
                       id="searchItem"
                       placeholder="Search..."
@@ -145,23 +145,23 @@ export default function Navbar({ navclass, navlight, manuclass }) {
             </li>
           ) : (
             <li
-              className="dropdown inline-block relative pe-1"
+              className="relative inline-block dropdown pe-1"
               ref={dropdownRef}
             >
               <button
-                className="dropdown-toggle align-middle inline-flex search-dropdown"
+                className="inline-flex align-middle dropdown-toggle search-dropdown"
                 type="button"
                 onClick={() => setIsOpen(!isOpen)}
               >
                 <FiSearch className="size-5"></FiSearch>
               </button>
               {isOpen && (
-                <div className="dropdown-menu absolute overflow-hidden end-0 m-0 mt-5 z-10 md:w-52 w-48 rounded-md bg-white dark:bg-slate-900 shadow dark:shadow-gray-800">
+                <div className="absolute z-10 w-48 m-0 mt-5 overflow-hidden bg-white rounded-md shadow dropdown-menu end-0 md:w-52 dark:bg-slate-900 dark:shadow-gray-800">
                   <div className="relative">
                     <FiSearch className="size-4 absolute top-[9px] end-3"></FiSearch>
                     <input
                       type="text"
-                      className="h-9 px-3 pe-10 w-full border-0 focus:ring-0 outline-none bg-white dark:bg-slate-900"
+                      className="w-full px-3 bg-white border-0 outline-none h-9 pe-10 focus:ring-0 dark:bg-slate-900"
                       name="s"
                       id="searchItem"
                       placeholder="Search..."
@@ -174,21 +174,21 @@ export default function Navbar({ navclass, navlight, manuclass }) {
 
           <li className="dropdown inline-block relative ps-0.5" ref={userRef}>
             <button
-              className="dropdown-toggle items-center"
+              className="items-center dropdown-toggle"
               type="button"
               onClick={() => setUserManu(!userManu)}
             >
-              <span className="size-8 inline-flex items-center justify-center tracking-wide align-middle duration-500 text-base text-center rounded-md border border-red-500 bg-red-500 text-white">
+              <span className="inline-flex items-center justify-center text-base tracking-wide text-center text-white align-middle duration-500 bg-red-500 border border-red-500 rounded-md size-8">
                 <Image src={userImg} className="rounded-md" alt="" />
               </span>
             </button>
             {userManu && (
-              <div className="dropdown-menu absolute end-0 m-0 mt-4 z-10 w-48 rounded-md overflow-hidden bg-white dark:bg-slate-900 shadow dark:shadow-gray-800 ">
+              <div className="absolute z-10 w-48 m-0 mt-4 overflow-hidden bg-white rounded-md shadow dropdown-menu end-0 dark:bg-slate-900 dark:shadow-gray-800 ">
                 <ul className="py-2 text-start">
                   <li>
                     <Link
                       href="/user-profile"
-                      className="flex items-center font-medium py-2 px-4 dark:text-white/70 hover:text-red-500 dark:hover:text-white"
+                      className="flex items-center px-4 py-2 font-medium dark:text-white/70 hover:text-red-500 dark:hover:text-white"
                     >
                       <FiUser className="size-4 me-2"></FiUser>Profile
                     </Link>
@@ -196,7 +196,7 @@ export default function Navbar({ navclass, navlight, manuclass }) {
                   <li>
                     <Link
                       href="/helpcenter"
-                      className="flex items-center font-medium py-2 px-4 dark:text-white/70 hover:text-red-500 dark:hover:text-white"
+                      className="flex items-center px-4 py-2 font-medium dark:text-white/70 hover:text-red-500 dark:hover:text-white"
                     >
                       <FiHelpCircle className="size-4 me-2"></FiHelpCircle>
                       Helpcenter
@@ -205,16 +205,16 @@ export default function Navbar({ navclass, navlight, manuclass }) {
                   <li>
                     <Link
                       href="/user-setting"
-                      className="flex items-center font-medium py-2 px-4 dark:text-white/70 hover:text-red-500 dark:hover:text-white"
+                      className="flex items-center px-4 py-2 font-medium dark:text-white/70 hover:text-red-500 dark:hover:text-white"
                     >
                       <FiSettings className="size-4 me-2"></FiSettings>Settings
                     </Link>
                   </li>
-                  <li className="border-t border-gray-100 dark:border-gray-800 my-2"></li>
+                  <li className="my-2 border-t border-gray-100 dark:border-gray-800"></li>
                   <li>
                     <Link
                       href="/login"
-                      className="flex items-center font-medium py-2 px-4 dark:text-white/70 hover:text-red-500 dark:hover:text-white"
+                      className="flex items-center px-4 py-2 font-medium dark:text-white/70 hover:text-red-500 dark:hover:text-white"
                     >
                       <FiLogOut className="size-4 me-2"></FiLogOut>Logout
                     </Link>
@@ -223,13 +223,31 @@ export default function Navbar({ navclass, navlight, manuclass }) {
               </div>
             )}
           </li>
-        </ul>
+        </ul> */}
 
         <div
           id="navigation"
           style={{ display: isToggle === true ? "block" : "none" }}
         >
           <ul className={`navigation-menu ${manuclass}`}>
+            <li className={`${manu === "/booking" ? "active" : ""}`}>
+              <Link href="/booking" className="sub-menu-item">
+                Booking
+              </Link>
+            </li>
+            <li className={`${manu === "/sign-in" ? "active" : ""}`}>
+              <Link href="/sign-in" className="sub-menu-item">
+                Sign In
+              </Link>
+            </li>
+            <li className={`${manu === "/sign-up" ? "active" : ""}`}>
+              <Link href="/sign-up" className="sub-menu-item">
+                Sign Up
+              </Link>
+            </li>
+          </ul>
+
+          {/* <ul className={`navigation-menu ${manuclass}`}>
             <li
               className={`has-submenu parent-menu-item ${
                 [
@@ -993,7 +1011,7 @@ export default function Navbar({ navclass, navlight, manuclass }) {
                 Contact Us
               </Link>
             </li>
-          </ul>
+          </ul> */}
         </div>
       </div>
     </nav>

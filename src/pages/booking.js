@@ -8,6 +8,21 @@ import { useState } from "react";
 
 export default function BookingPage() {
   const [showPromoCodeBox, setShowPromoCodeBox] = useState(false);
+
+  const [adultCount, setAdultCount] = useState(1);
+  const [childCount, setChildCount] = useState(0);
+
+  const handleChangeAdultCount = (count) => {
+    if (count != 0) {
+      setAdultCount(count);
+    }
+  };
+  const handleChangeChildCount = (count) => {
+    if (count != -1) {
+      setChildCount(count);
+    }
+  };
+
   return (
     <Layout headerLayout={2}>
       <div className="container py-10">
@@ -125,15 +140,19 @@ export default function BookingPage() {
                   <div className="flex items-center gap-3 lg:gap-5">
                     <button
                       type="button"
-                      data-active={false}
+                      data-active={adultCount > 1}
+                      onClick={() => handleChangeAdultCount(adultCount - 1)}
                       className="  flex items-center justify-center w-10 h-10 text-4xl font-normal text-gray-300 data-[active='true']:text-black  data-[active='true']:border-black border border-gray-200 rounded-full shadow  "
                     >
                       -
                     </button>
-                    <span className="text-lg">1</span>
+                    <span className="w-6 text-lg text-center ">
+                      {adultCount}
+                    </span>
                     <button
                       type="button"
                       data-active={true}
+                      onClick={() => handleChangeAdultCount(adultCount + 1)}
                       className="  flex items-center justify-center w-10 h-10 text-4xl font-normal text-gray-300 data-[active='true']:text-black  data-[active='true']:border-black border border-gray-200 rounded-full shadow  "
                     >
                       +
@@ -149,15 +168,19 @@ export default function BookingPage() {
                   <div className="flex items-center gap-3 lg:gap-5">
                     <button
                       type="button"
-                      data-active={false}
+                      data-active={childCount > 0}
+                      onClick={() => handleChangeChildCount(childCount - 1)}
                       className="  flex items-center justify-center w-10 h-10 text-4xl font-normal text-gray-300 data-[active='true']:text-black  data-[active='true']:border-black border border-gray-200 rounded-full shadow  "
                     >
                       -
                     </button>
-                    <span className="text-lg">0</span>
+                    <span className="w-6 text-lg text-center">
+                      {childCount}
+                    </span>
                     <button
                       type="button"
                       data-active={true}
+                      onClick={() => handleChangeChildCount(childCount + 1)}
                       className="  flex items-center justify-center w-10 h-10 text-4xl font-normal text-gray-300 data-[active='true']:text-black  data-[active='true']:border-black border border-gray-200 rounded-full shadow  "
                     >
                       +

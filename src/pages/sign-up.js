@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import axios from "@/utils/axios";
 import { extractErrorMessages } from "@/utils/helpers";
 import { useRouter } from "next/router";
+import bg6 from "@/assets/images/bg/6.jpg";
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -78,7 +79,12 @@ export default function SignUpPage() {
 
   return (
     <section className="relative flex items-center overflow-hidden md:h-screen py-36 zoom-image">
-      <div className="absolute inset-0 bg-center bg-no-repeat bg-cover image-wrap z-1"></div>
+      <div
+        style={{
+          background: `url("${bg6.src}")`,
+        }}
+        className="absolute inset-0 bg-center bg-no-repeat bg-cover image-wrap z-1"
+      ></div>
       <div
         className="absolute inset-0 bg-gradient-to-b from-transparent to-black z-2"
         id="particles-snow"

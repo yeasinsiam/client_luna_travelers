@@ -9,12 +9,12 @@ import Image from "next/image";
 
 export default function Footer() {
   return (
-    <footer className="footer bg-dark-footer relative text-gray-200 dark:text-gray-200">
+    <footer className="relative mt-16 overflow-hidden text-gray-200 footer bg-dark-footer dark:text-gray-200 md:mt-24">
       <div className="container relative">
         <div className="grid grid-cols-12">
           <div className="col-span-12">
             <div className="py-[60px] px-0">
-              <div className="grid md:grid-cols-12 grid-cols-1 gap-6">
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-12">
                 <div className="lg:col-span-3 md:col-span-12">
                   <Link href="/" className="text-[22px] focus:outline-none">
                     <Image src={logoLight} alt="" />
@@ -23,7 +23,7 @@ export default function Footer() {
                     Planning for a trip? We will organize your trip with the
                     best places and within best budget!
                   </p>
-                  <ul className="list-none mt-6 space-x-1">
+                  <ul className="mt-6 space-x-1 list-none">
                     {footerSocial.map((item, index) => {
                       let Icon = item.icon;
                       return (
@@ -31,10 +31,10 @@ export default function Footer() {
                           <Link
                             href="/"
                             target="_blank"
-                            className="size-8 inline-flex items-center justify-center tracking-wide align-middle text-base border border-gray-800 dark:border-slate-800 rounded-md hover:bg-red-500 hover:text-white text-slate-300"
+                            className="inline-flex items-center justify-center text-base tracking-wide align-middle border border-gray-800 rounded-md size-8 dark:border-slate-800 hover:bg-red-500 hover:text-white text-slate-300"
                           >
                             <Icon
-                              className="size-4 align-middle"
+                              className="align-middle size-4"
                               title="Buy Now"
                             ></Icon>
                           </Link>
@@ -54,7 +54,7 @@ export default function Footer() {
                     </h5>
 
                     <div className="flex mt-4">
-                      <FiMapPin className="size-4 text-red-500 me-2 mt-1"></FiMapPin>
+                      <FiMapPin className="mt-1 text-red-500 size-4 me-2"></FiMapPin>
                       <div className="">
                         <h6 className="text-gray-300">
                           C/54 Northwest Freeway, <br /> Suite 558, <br />{" "}
@@ -64,11 +64,11 @@ export default function Footer() {
                     </div>
 
                     <div className="flex mt-4">
-                      <FiMail className="size-4 text-red-500 me-2 mt-1"></FiMail>
+                      <FiMail className="mt-1 text-red-500 size-4 me-2"></FiMail>
                       <div className="">
                         <a
                           href="mailto:contact@example.com"
-                          className="text-slate-300 hover:text-slate-400 duration-500 ease-in-out"
+                          className="duration-500 ease-in-out text-slate-300 hover:text-slate-400"
                         >
                           contact@example.com
                         </a>
@@ -76,11 +76,11 @@ export default function Footer() {
                     </div>
 
                     <div className="flex mt-4">
-                      <FiPhone className="size-4 text-red-500 me-2 mt-1"></FiPhone>
+                      <FiPhone className="mt-1 text-red-500 size-4 me-2"></FiPhone>
                       <div className="">
                         <a
                           href="tel:+152534-468-854"
-                          className="text-slate-300 hover:text-slate-400 duration-500 ease-in-out"
+                          className="duration-500 ease-in-out text-slate-300 hover:text-slate-400"
                         >
                           +152 534-468-854
                         </a>
@@ -94,13 +94,13 @@ export default function Footer() {
                     <h5 className="tracking-[1px] text-gray-100 font-semibold">
                       Company
                     </h5>
-                    <ul className="list-none footer-list mt-6">
+                    <ul className="mt-6 list-none footer-list">
                       {footerCompany.map((item, index) => {
                         return (
                           <li className="mt-[10px] first:mt-0" key={index}>
                             <Link
                               href="/"
-                              className="text-gray-300 hover:text-gray-400 duration-500 ease-in-out"
+                              className="text-gray-300 duration-500 ease-in-out hover:text-gray-400"
                             >
                               <i className="mdi mdi-chevron-right"></i>{" "}
                               {item.name}
@@ -126,11 +126,11 @@ export default function Footer() {
                           Write your email{" "}
                           <span className="text-red-600">*</span>
                         </label>
-                        <div className="form-icon relative mt-2">
-                          <FiMail className="size-4 absolute top-3 start-4"></FiMail>
+                        <div className="relative mt-2 form-icon">
+                          <FiMail className="absolute size-4 top-3 start-4"></FiMail>
                           <input
                             type="email"
-                            className="ps-12 rounded w-full py-2 px-3 h-10 bg-gray-800 border-0 text-gray-100 focus:shadow-none focus:ring-0 placeholder:text-gray-200 outline-none"
+                            className="w-full h-10 px-3 py-2 text-gray-100 bg-gray-800 border-0 rounded outline-none ps-12 focus:shadow-none focus:ring-0 placeholder:text-gray-200"
                             placeholder="Email"
                             name="email"
                             required=""
@@ -142,7 +142,7 @@ export default function Footer() {
                         type="submit"
                         id="submitsubscribe"
                         name="send"
-                        className="py-2 px-5 inline-block font-semibold tracking-wide align-middle duration-500 text-base text-center bg-red-500 text-white rounded-md"
+                        className="inline-block px-5 py-2 text-base font-semibold tracking-wide text-center text-white align-middle duration-500 bg-red-500 rounded-md"
                       >
                         Subscribe
                       </button>
@@ -160,8 +160,11 @@ export default function Footer() {
           <div className="grid grid-cols-1">
             <div className="text-center">
               <p className="mb-0">
+                © {new Date().getFullYear()}. All Rights Reserved
+              </p>
+              {/* <p className="mb-0">
                 © {new Date().getFullYear()} Travosy. Design & Develop with{" "}
-                <i className="mdi mdi-heart text-red-600"></i> by{" "}
+                <i className="text-red-600 mdi mdi-heart"></i> by{" "}
                 <a
                   href="https://shreethemes.in/"
                   target="_blank"
@@ -170,7 +173,7 @@ export default function Footer() {
                   Shreethemes
                 </a>
                 .
-              </p>
+              </p> */}
             </div>
           </div>
         </div>

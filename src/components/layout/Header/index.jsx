@@ -10,9 +10,10 @@ export default function Header({ headerLayout = 1 }) {
           <Tagline />
           <Navbar
             navclass="defaultscroll is-sticky tagline-height"
-            navlight={true}
-            manuclass="justify-end nav-light"
+            navlight={false}
+            manuclass="justify-end "
           />
+          <div className=" lg:py-14"></div>
         </>
       )}
       {headerLayout == 2 && (

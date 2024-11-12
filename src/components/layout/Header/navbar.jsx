@@ -82,7 +82,7 @@ export default function Navbar({ navclass, navlight, manuclass }) {
         )}
         {!navlight && (
           <Link className="logo" href="/">
-            {/* <div>
+            <div>
               <Image
                 src={logoDark}
                 className="inline-block h-7 dark:hidden"
@@ -93,7 +93,7 @@ export default function Navbar({ navclass, navlight, manuclass }) {
                 className="hidden h-7 dark:inline-block"
                 alt=""
               />
-            </div> */}
+            </div>
           </Link>
         )}
 

@@ -32,7 +32,7 @@ export default function BookingPage() {
           </h3>
         </div>
 
-        <div className="grid grid-cols-12 gap-10 mt-10 ">
+        <div className="grid grid-cols-12 mt-10 gap-y-5 lg:gap-5 ">
           <div className="flex flex-col order-1 col-span-12 gap-5 lg:order-2 lg:col-span-5">
             {/* Trip information */}
             <div className="p-6 bg-white border border-gray-300 rounded-md shadow-lg">
@@ -227,19 +227,36 @@ export default function BookingPage() {
                         Per person in a room for 2 people.{" "}
                       </p>
                     </div>
-                    <div className="flex justify-between min-w-64">
-                      <div>
-                        <h5 className="font-bold leading-normal ">$6,356</h5>
-                        <p className="text-xs">per Adult</p>
+                    <div className="flex flex-col gap-3 min-w-64">
+                      <div className="flex justify-between min-w-64">
+                        <div>
+                          <h5 className="font-bold leading-normal ">$6,356</h5>
+                          <p className="text-xs">per Adult</p>
+                        </div>
+                        <div>
+                          <select
+                            aria-disabled={false}
+                            className="w-32 px-5 py-3 bg-transparent border border-gray-400 rounded-lg aria-disabled:bg-gray-200 aria-disabled:text-gray-500 aria-disabled:border-gray-400"
+                          >
+                            <option select>0 Adult</option>
+                            <option>1 Adult</option>
+                          </select>
+                        </div>
                       </div>
-                      <div>
-                        <select
-                          aria-disabled={false}
-                          className="w-32 px-5 py-3 bg-transparent border border-gray-400 rounded-lg aria-disabled:bg-gray-200 aria-disabled:text-gray-500 aria-disabled:border-gray-400"
-                        >
-                          <option select>0 Adult</option>
-                          <option>1 Adult</option>
-                        </select>
+                      <div className="flex justify-between min-w-64">
+                        <div>
+                          <h5 className="font-bold leading-normal ">$6,356</h5>
+                          <p className="text-xs">per Child</p>
+                        </div>
+                        <div>
+                          <select
+                            aria-disabled={false}
+                            className="w-32 px-5 py-3 bg-transparent border border-gray-400 rounded-lg aria-disabled:bg-gray-200 aria-disabled:text-gray-500 aria-disabled:border-gray-400"
+                          >
+                            <option select>0 Child</option>
+                            <option>1 Child</option>
+                          </select>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -342,7 +359,7 @@ export default function BookingPage() {
               </div>
 
               <div className="flex mt-5">
-                <div className="flex flex-col w-2/4 gap-3 lg:w-full">
+                <div className="flex flex-col w-full gap-3 lg:w-2/4">
                   <div className="">
                     <label className="font-semibold">First Name*:</label>
                     <input

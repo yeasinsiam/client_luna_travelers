@@ -26,7 +26,7 @@ export default function TopBanner() {
             <h2 className="text-2xl font-bold text-white md:text-4xl ">
               2027 Total Solar Eclipse in Egypt - 8 days - All Inclusive
             </h2>
-            <div className="max-w-[23rem] relative  md:h-max md:-top-10">
+            <div className="max-w-[23rem] z-30 relative  md:h-max md:-top-10">
               {!isStickyPriceWidget && (
                 <PriceWidget {...{ setShowAskQuestionPopup }} />
               )}

@@ -38,13 +38,10 @@ export default function FaqSection() {
                     className="relative mt-4 overflow-hidden rounded-md shadow dark:shadow-gray-800 first:mt-0"
                     key={index}
                   >
-                    <h2
-                      className="text-base font-semibold"
-                      id="accordion-collapse-heading-1"
-                    >
+                    <h2 className="text-base font-semibold">
                       <button
                         type="button"
-                        className={`flex justify-between items-center p-5 w-full font-medium text-start ${
+                        className={`flex justify-between items-center p-3 text-sm w-full font-medium text-start ${
                           activeIndex === item.id
                             ? "bg-gray-50 dark:bg-slate-800 text-red-500"
                             : ""
@@ -61,7 +58,7 @@ export default function FaqSection() {
                     </h2>
                     <div className={activeIndex === item.id ? "" : "hidden"}>
                       <div className="p-5">
-                        <p className="text-slate-400 dark:text-gray-400">
+                        <p className="text-slate-400 dark:text-gray-400 text-sm">
                           {item.desc}
                         </p>
                       </div>

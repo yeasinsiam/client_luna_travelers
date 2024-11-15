@@ -86,13 +86,13 @@ export default function DescriptionTab({ tourData }) {
           <li className="flex justify-between py-3 border-t border-gray-300">
             <span>Tour start at</span>
             <div className="w-2/5">
-              <span>Luxor</span>
+              <span>{tourData.from_destination}</span>
             </div>
           </li>
           <li className="flex justify-between py-3 border-gray-300 border-y">
             <span>Tour end at</span>
             <div className="w-2/5">
-              <span>Cairo</span>
+              <span>{tourData.to_destination}</span>
             </div>
           </li>
         </ul>

@@ -14,7 +14,7 @@ export default function TopBanner({ tourData }) {
         <div className="w-full h-full">
           <div className="w-full h-full">
             <Image
-              src={tourData.images[1].image}
+              src={tourData.banner_image}
               alt="bg1"
               className="object-cover w-full h-full"
               fill

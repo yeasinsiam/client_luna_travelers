@@ -11,15 +11,18 @@ export default function PackagesAndTerms({ tourData }) {
           <div className="w-full md:w-3/4">
             <h4 className="">{data.title}</h4>
 
-            <div className="mt-3 space-y-1 text-sm">
-              <h5 className="font-bold">
+            <div
+              className="mt-3 space-y-1 text-sm"
+              dangerouslySetInnerHTML={{ __html: data.description }}
+            >
+              {/* <h5 className="font-bold">
                 Lorem ipsum dolor sit amet consectetur.
               </h5>
               <p className="text-xs">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste
                 excepturi odit praesentium nam? Officia, officiis illum animi
                 sapiente sint expedita?
-              </p>
+              </p> */}
             </div>
           </div>
           <div className="flex justify-between w-full gap-3 md:justify-start md:w-1/3">

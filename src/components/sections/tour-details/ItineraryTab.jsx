@@ -65,10 +65,14 @@ export default function ItineraryTab({ tourData }) {
             </h2>
             <div class={activeIndex === data.id ? "" : "hidden"}>
               <div className="p-5">
-                <div
-                  className="text-sm text-slate-400 dark:text-gray-400"
-                  dangerouslySetInnerHTML={{ __html: data.description }}
-                />
+                {data.images.length ? (
+                  <AccItemDescVideo data={data} />
+                ) : (
+                  <div
+                    className="text-sm text-slate-400 dark:text-gray-400"
+                    dangerouslySetInnerHTML={{ __html: data.description }}
+                  />
+                )}
               </div>
             </div>
           </div>
@@ -78,7 +82,7 @@ export default function ItineraryTab({ tourData }) {
   );
 }
 
-function AccItemDescVideo() {
+function AccItemDescVideo({ data }) {
   const settings = {
     controls: true,
     mouseDrag: true,
@@ -99,25 +103,19 @@ function AccItemDescVideo() {
   };
   return (
     <div className="grid grid-cols-12 gap-3 p-5">
-      <div className="relative col-span-12 overflow-hidden rounded-lg md:col-span-5">
+      <div className="relative col-span-12 overflow-hidden rounded-lg md:col-span-5 h-52">
         <TinySlider settings={settings}>
-          <div className="relative h-52">
-            <Image
-              src={"/static/bg/2.jpg"}
-              alt="bg1"
-              className="object-cover w-full h-full"
-              fill
-            />
-          </div>
-          <div className="relative h-52">
-            <Image
-              src={"/static/bg/5.jpg"}
-              alt="bg2"
-              className="object-cover w-full h-full"
-              fill
-            />
-          </div>
-          <div className="relative h-52">
+          {data.images.map((image) => (
+            <div key={image.id} className="relative h-52">
+              <Image
+                src={image.image}
+                alt="image"
+                className="object-cover w-full h-full"
+                fill
+              />
+            </div>
+          ))}
+          {/* <div className="relative h-52">
             <video
               playsInline
               autoPlay
@@ -133,14 +131,13 @@ function AccItemDescVideo() {
                 type="video/mp4"
               />
             </video>
-          </div>
+          </div> */}
         </TinySlider>
       </div>
-      <p className="col-span-12 text-slate-400 md:col-span-7 dark:text-gray-400">
-        There are many variations of passages of Lorem Ipsum available, but the
-        majority have suffered alteration in some form. Lorem ipsum dolor sit
-        amet, consectetur adipisicing elit.
-      </p>
+      <div
+        className="col-span-12 text-slate-400 md:col-span-7 dark:text-gray-400"
+        dangerouslySetInnerHTML={{ __html: data.description }}
+      />
     </div>
   );
 }

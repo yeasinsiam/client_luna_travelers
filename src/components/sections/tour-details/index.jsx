@@ -8,7 +8,7 @@ import InclusionsTab from "./InclusionsTab";
 import PackagesAndTerms from "./PackagesAndTerms";
 import OtherInformationTab from "./OtherInformationTab";
 
-export default function ProgramDetailsSection({ tourData }) {
+export default function TourDetailsSection({ tourData }) {
   const [activeTab, setActiveTab] = useState("description");
   // description, itinerary, accommodation, package_and_terms, inclusions
 

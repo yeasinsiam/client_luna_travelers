@@ -8,7 +8,7 @@ import InclusionsTab from "./InclusionsTab";
 import PackagesAndTerms from "./PackagesAndTerms";
 import OtherInformationTab from "./OtherInformationTab";
 
-export default function ProgramDetailsSection() {
+export default function ProgramDetailsSection({ tourData }) {
   const [activeTab, setActiveTab] = useState("description");
   // description, itinerary, accommodation, package_and_terms, inclusions
 
@@ -32,7 +32,7 @@ export default function ProgramDetailsSection() {
 
   return (
     <>
-      <TopBanner />
+      <TopBanner {...{ tourData }} />
       {/* Tabs */}
       <div className="container relative mt-8 md:mt-12">
         <div className="md:max-w-2xl">
@@ -89,17 +89,21 @@ export default function ProgramDetailsSection() {
           </ul>
           <div id="tab-scroll-to-location"></div>
 
-          {activeTab == "description" && <DescriptionTab />}
-          {activeTab == "itinerary" && <ItineraryTab />}
-          {activeTab == "accommodation" && <AccommodationTab />}
+          {activeTab == "description" && <DescriptionTab {...{ tourData }} />}
+          {activeTab == "itinerary" && <ItineraryTab {...{ tourData }} />}
+          {activeTab == "accommodation" && (
+            <AccommodationTab {...{ tourData }} />
+          )}
           {activeTab == "package_and_terms" && (
             <>
-              <PackagesAndTerms />
-              <CancellationPolicyTab />
+              <PackagesAndTerms {...{ tourData }} />
+              <CancellationPolicyTab {...{ tourData }} />
             </>
           )}
-          {activeTab == "inclusions" && <InclusionsTab />}
-          {activeTab == "other_information" && <OtherInformationTab />}
+          {activeTab == "inclusions" && <InclusionsTab {...{ tourData }} />}
+          {activeTab == "other_information" && (
+            <OtherInformationTab {...{ tourData }} />
+          )}
         </div>
       </div>
     </>

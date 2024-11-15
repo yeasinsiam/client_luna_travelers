@@ -4,7 +4,7 @@ import { FaRegCircleXmark } from "react-icons/fa6";
 import { HiDownload } from "react-icons/hi";
 import { RiDownloadLine } from "react-icons/ri";
 
-export default function TopBanner() {
+export default function TopBanner({ tourData }) {
   const isStickyPriceWidget = useIsStickyPriceWidget();
   const [showAskQuestionPopup, setShowAskQuestionPopup] = useState(false);
 
@@ -14,7 +14,7 @@ export default function TopBanner() {
         <div className="w-full h-full">
           <div className="w-full h-full">
             <Image
-              src={"/static/bg/2.jpg"}
+              src={tourData.images[1].image}
               alt="bg1"
               className="object-cover w-full h-full"
               fill
@@ -24,11 +24,11 @@ export default function TopBanner() {
         <div className="absolute bottom-0 left-0 w-full ">
           <div className="container relative flex flex-col w-full gap-3 py-3 bg-gradient-to-t from-black/100 via-black/70 h-28 md:flex-row md:justify-between md:overflow-visible">
             <h2 className="text-2xl font-bold text-white md:text-4xl ">
-              2027 Total Solar Eclipse in Egypt - 8 days - All Inclusive
+              {tourData.title}
             </h2>
             <div className="max-w-[23rem] z-30 relative  md:h-max md:-top-10">
               {!isStickyPriceWidget && (
-                <PriceWidget {...{ setShowAskQuestionPopup }} />
+                <PriceWidget {...{ setShowAskQuestionPopup, tourData }} />
               )}
             </div>
           </div>
@@ -37,7 +37,7 @@ export default function TopBanner() {
       {isStickyPriceWidget && (
         <div className="container">
           <div className="max-w-[23rem] fixed top-[80px] z-30 ml-[755px]  ">
-            <PriceWidget {...{ setShowAskQuestionPopup }} />
+            <PriceWidget {...{ setShowAskQuestionPopup, tourData }} />
           </div>
         </div>
       )}
@@ -183,20 +183,28 @@ function AskQuestionPopup({ showAskQuestionPopup, setShowAskQuestionPopup }) {
   );
 }
 
-function PriceWidget({ setShowAskQuestionPopup }) {
+function PriceWidget({ setShowAskQuestionPopup, tourData }) {
   return (
     <div className="p-6 bg-white border border-gray-400 rounded-md shadow-lg ">
       <div className="pb-5 text-center ">
-        <h3 className="text-4xl font-bold">$5,480</h3>
+        <h3 className="text-4xl font-bold">
+          ${parseInt(tourData.price).toLocaleString()}
+        </h3>
         <span className="text-sm text-slate-400">
-          Deposit: <b className="text-black">$750</b>
+          Deposit:{" "}
+          <b className="text-black">
+            ${parseInt(tourData.deposit_price).toLocaleString()}
+          </b>
         </span>
       </div>
 
       <div className="py-5 space-y-3 border-gray-300 border-y">
         <select className="w-full h-10 px-3 py-2 bg-transparent border border-gray-400 rounded-md outline-none form-select dark:bg-slate-900 dark:text-slate-200 dark:border-gray-800 focus:ring-0 ">
-          <option>Double Room</option>
-          <option>Single Room</option>
+          {tourData.packages.map((data) => (
+            <option key={data.id}>{data.title}</option>
+          ))}
+          {/* <option>Double Room</option>
+          <option>Single Room</option> */}
         </select>
         <button
           type="button"
@@ -207,12 +215,13 @@ function PriceWidget({ setShowAskQuestionPopup }) {
       </div>
 
       <div className="pt-5 space-y-3">
-        <button
-          type="button"
+        <a
+          href={tourData.brochure_document}
+          target="_blank"
           className="inline-flex items-center justify-center w-full h-10 gap-3 px-5 py-1 text-base tracking-wide text-center text-white align-middle duration-500 bg-gray-400 rounded-md cursor-pointer"
         >
-          Download Brochure asdf
-        </button>
+          Download Brochure <RiDownloadLine />
+        </a>
         <button
           type="button"
           onClick={() => setShowAskQuestionPopup(true)}

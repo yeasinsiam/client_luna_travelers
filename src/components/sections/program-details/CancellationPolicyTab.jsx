@@ -1,13 +1,19 @@
 import React from "react";
 
-export default function CancellationPolicyTab() {
+export default function CancellationPolicyTab({ tourData }) {
   return (
     <div className="p-5 mt-5 bg-white border border-gray-200 rounded-lg shadow-lg md:grid-cols-2 md:mt-6">
       <h4 className="text-lg font-bold leading-normal text-red-500">
         Cancellation Policy:
       </h4>
 
-      <div className="whitespace-pre text-slate-500 ">
+      <div
+        className="mt-3 text-sm text-slate-500"
+        dangerouslySetInnerHTML={{
+          __html: tourData.cancellation_policy.description,
+        }}
+      />
+      {/* <div className="whitespace-pre text-slate-500 ">
         {`
 • Once the trip is paid in full, it is non-refundak 
 • If cancellation occurs: 
@@ -16,7 +22,7 @@ export default function CancellationPolicyTab() {
     • Any processing fees, ticketed air are  
 • Purchase Travel, Accident and Cancellation insurance policies.
        `}
-      </div>
+      </div> */}
     </div>
   );
 }

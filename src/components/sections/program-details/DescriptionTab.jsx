@@ -4,7 +4,7 @@ import React from "react";
 import { IoNewspaperOutline } from "react-icons/io5";
 const TinySlider = dynamic(() => import("tiny-slider-react"), { ssr: false });
 
-export default function DescriptionTab() {
+export default function DescriptionTab({ tourData }) {
   const settings = {
     controls: true,
     mouseDrag: true,
@@ -27,15 +27,18 @@ export default function DescriptionTab() {
     <div className="p-3 mt-8 bg-white border border-gray-200 rounded-lg shadow-lg md:grid-cols-2 md:mt-12">
       <div className="relative overflow-hidden rounded-lg ">
         <TinySlider settings={settings}>
-          <div className="relative h-[350px]">
-            <Image
-              src={"/static/bg/2.jpg"}
-              alt="bg1"
-              className="object-cover w-full h-full"
-              fill
-            />
-          </div>
-          <div className="relative h-[350px]">
+          {tourData.images.map((image) => (
+            <div key={image.id} className="relative h-[350px]">
+              <Image
+                src={image.image}
+                // src={"/static/bg/2.jpg"}
+                alt="bg1"
+                className="object-cover w-full h-full"
+                fill
+              />
+            </div>
+          ))}
+          {/* <div className="relative h-[350px]">
             <Image
               src={"/static/bg/5.jpg"}
               alt="bg2"
@@ -59,7 +62,7 @@ export default function DescriptionTab() {
                 type="video/mp4"
               />
             </video>
-          </div>
+          </div> */}
         </TinySlider>
       </div>
 
@@ -74,12 +77,10 @@ export default function DescriptionTab() {
           Lorem ipsum dolor sit amet.
         </h4>
 
-        <p className="mt-1 text-sm text-slate-500">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Et
-          laboriosam, labore cupiditate dolorem perferendis maiores, libero
-          nesciunt veniam animi ipsa quod odit tempore voluptate! Temporibus
-          animi exercitationem neque tempora praesentium beatae eaque delectus
-        </p>
+        <div
+          className="mt-1 text-sm text-slate-500"
+          dangerouslySetInnerHTML={{ __html: tourData.description }}
+        />
 
         <ul className="text-sm mt-7 text-slate-500 md:w-3/5">
           <li className="flex justify-between py-3 border-t border-gray-300">

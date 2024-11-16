@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 import { FaRegCircleXmark } from "react-icons/fa6";
 import { HiDownload } from "react-icons/hi";
@@ -184,6 +185,9 @@ function AskQuestionPopup({ showAskQuestionPopup, setShowAskQuestionPopup }) {
 }
 
 function PriceWidget({ setShowAskQuestionPopup, tourData }) {
+  const [selectedPackage, setSelectedPackage] = useState(
+    tourData.packages[0].id
+  );
   return (
     <div className="p-6 bg-white border border-gray-400 rounded-md shadow-lg ">
       <div className="pb-5 text-center ">
@@ -199,19 +203,25 @@ function PriceWidget({ setShowAskQuestionPopup, tourData }) {
       </div>
 
       <div className="py-5 space-y-3 border-gray-300 border-y">
-        <select className="w-full h-10 px-3 py-2 bg-transparent border border-gray-400 rounded-md outline-none form-select dark:bg-slate-900 dark:text-slate-200 dark:border-gray-800 focus:ring-0 ">
+        <select
+          value={selectedPackage}
+          onChange={(e) => selectedPackage(parseInt(e.target.value))}
+          className="w-full h-10 px-3 py-2 bg-transparent border border-gray-400 rounded-md outline-none form-select dark:bg-slate-900 dark:text-slate-200 dark:border-gray-800 focus:ring-0 "
+        >
           {tourData.packages.map((data) => (
-            <option key={data.id}>{data.title}</option>
+            <option key={data.id} value={data.id}>
+              {data.title}
+            </option>
           ))}
           {/* <option>Double Room</option>
           <option>Single Room</option> */}
         </select>
-        <button
-          type="button"
+        <Link
+          href={`/tours/${tourData.id}/${selectedPackage}/booking`}
           className="inline-block w-full h-10 px-5 py-1 text-base tracking-wide text-center text-white align-middle duration-500 bg-red-500 rounded-md cursor-pointer"
         >
           Book Now
-        </button>
+        </Link>
       </div>
 
       <div className="pt-5 space-y-3">

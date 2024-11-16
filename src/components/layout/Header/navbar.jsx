@@ -230,11 +230,11 @@ export default function Navbar({ navclass, navlight, manuclass }) {
           style={{ display: isToggle === true ? "block" : "none" }}
         >
           <ul className={`navigation-menu ${manuclass}`}>
-            <li className={`${manu === "/booking" ? "active" : ""}`}>
+            {/* <li className={`${manu === "/booking" ? "active" : ""}`}>
               <Link href="/booking" className="sub-menu-item">
                 Booking
               </Link>
-            </li>
+            </li> */}
             <li className={`${manu === "/sign-in" ? "active" : ""}`}>
               <Link href="/sign-in" className="sub-menu-item">
                 Sign In

@@ -1,4 +1,5 @@
 import Layout from "@/components/layout";
+import PageLoading from "@/components/PageLoading";
 import TourDetailsSection from "@/components/sections/tour-details";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
@@ -11,7 +12,7 @@ export default function TourDetailsPage() {
     data: tourData,
     error: tourDataError,
     isLoading: tourDataLoading,
-  } = useSWR(`/tours/${router.query.slug}/`, {
+  } = useSWR(`/tours/${router.query.tourId}/`, {
     revalidateIfStale: false,
   });
 
@@ -22,9 +23,7 @@ export default function TourDetailsPage() {
     }
   }, [tourDataError]);
 
-  console.log(tourData);
-
-  if (!tourData) return;
+  if (!tourData) return <PageLoading />;
   return (
     <Layout>
       <TourDetailsSection tourData={tourData} />

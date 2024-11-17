@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 export default function PackagesAndTerms({ tourData }) {
@@ -34,12 +35,15 @@ export default function PackagesAndTerms({ tourData }) {
             </div>
 
             <div>
-              <button
-                type="button"
+              <Link
+                href={{
+                  pathname: "/tours/[tourId]/[packageId]/booking",
+                  query: { tourId: tourData.id, packageId: data.id },
+                }}
                 class="py-3 px-5 whitespace-nowrap text-sm  block tracking-wide align-middle duration-500  text-center bg-white text-red-500 hover:bg-red-500 border border-red-500 hover:text-white font-semibold rounded-md w-full cursor-pointer"
               >
                 Book Now
-              </button>
+              </Link>
             </div>
           </div>
         </div>

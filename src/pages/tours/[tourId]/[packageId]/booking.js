@@ -9,6 +9,9 @@ import { useRouter } from "next/router";
 import PageLoading from "@/components/PageLoading";
 import useSWR from "swr";
 import SelectTravellersForm from "@/components/sections/tour-booking/SelectTravellersForm";
+import { useImmer } from "use-immer";
+import axios from "@/utils/axios";
+import { capitalizeText } from "@/utils/helpers";
 
 export default function BookingPage() {
   const router = useRouter();
@@ -39,9 +42,107 @@ export default function BookingPage() {
 function BookingPageComponent({ packageData }) {
   const [showPromoCodeBox, setShowPromoCodeBox] = useState(false);
 
+  const [priceData, setPriceData] = useState(null);
+
   const [travellers, setTravellers] = useState(
     packageData.travellers.map((traveller) => ({ ...traveller, count: 0 }))
   );
+
+  const initialSelectedAccommodation = packageData.accommodations.map(
+    (accommodation) => {
+      return {
+        accommodationId: accommodation.id,
+        guest_types: accommodation.guest_types.map((guestType) => ({
+          guest_type: guestType.guest_type,
+          selectedTravellers: 0,
+        })),
+      };
+    },
+    []
+  );
+  const [selectedAccommodation, setSelectedAccommodation] = useImmer(
+    initialSelectedAccommodation
+  );
+
+  const updateSelectedAccommodation = (
+    accommodationId,
+    guestType,
+    travellersCount
+  ) => {
+    setSelectedAccommodation((draft) => {
+      const accommodationToUpdate = draft.find(
+        (obj) => obj.accommodationId === accommodationId
+      );
+
+      if (accommodationToUpdate) {
+        const accommodationGuestTypeToUpdate =
+          accommodationToUpdate.guest_types.find(
+            (obj) => obj.guest_type === guestType
+          );
+
+        accommodationGuestTypeToUpdate["selectedTravellers"] = travellersCount;
+      }
+    });
+  };
+
+  const getSelectedTravellers = (accommodationId, guestType) => {
+    const accommodation =
+      selectedAccommodation[
+        selectedAccommodation.findIndex(
+          (obj) => obj.accommodationId == accommodationId
+        )
+      ];
+
+    return accommodation.guest_types[
+      accommodation.guest_types.findIndex((obj) => obj.guest_type == guestType)
+    ].selectedTravellers;
+  };
+
+  useEffect(() => {
+    setSelectedAccommodation(initialSelectedAccommodation);
+  }, [travellers]);
+
+  useEffect(() => {
+    setPriceData(null);
+    const items = selectedAccommodation.reduce((store, accommodation) => {
+      const item = {
+        package: packageData.id,
+        accommodation: accommodation.accommodationId,
+      };
+
+      if (
+        accommodation.guest_types.some(
+          (guest_type) => guest_type.selectedTravellers != 0
+        )
+      ) {
+        accommodation.guest_types.forEach((guest) => {
+          const quantityKey = `${guest.guest_type.toLowerCase()}_quantity`;
+          if (guest.selectedTravellers > 0) {
+            item[quantityKey] = guest.selectedTravellers;
+          }
+        });
+
+        store.push(item);
+      }
+
+      return store;
+    }, []);
+
+    if (!items.length) return;
+
+    axios
+      .post("/bookings/price-calculate/", {
+        items,
+        flight: 1,
+        // promo_code: "string",
+      })
+      .then(function (response) {
+        setPriceData(response.data.data);
+      })
+      .catch(function (error) {
+        // console.error(error);
+      });
+  }, [selectedAccommodation]);
 
   return (
     <Layout headerLayout={2}>
@@ -109,36 +210,79 @@ function BookingPageComponent({ packageData }) {
             </div>
 
             {/* Price Breakdown */}
+
             <div className="p-6 bg-white border border-gray-300 rounded-md shadow-lg lg:sticky lg:top-24">
               <h4 className="text-lg font-bold leading-normal">
                 Price Breakdown
               </h4>
-              <div className="flex items-start gap-2 p-3 mt-5 bg-indigo-100 rounded-lg lg:items-center">
-                <BsExclamationCircle className="flex-shrink-0 text-2xl fill-indigo-500" />
-                <p>
-                  Select the number of travellers and assign accommodation to
-                  display the price.
-                </p>
-              </div>
 
-              {/* <div className="mt-5">
-                <div className="flex justify-between pb-5 border-b">
-                  <div className="flex flex-col">
-                    <h3>Single Room</h3>
-                    <span className="text-sm text-gray-500">
-                      1 Adult x $9,730.25
-                    </span>
+              {!priceData ? (
+                <div className="flex items-start gap-2 p-3 mt-5 bg-indigo-100 rounded-lg lg:items-center">
+                  <BsExclamationCircle className="flex-shrink-0 text-2xl fill-indigo-500" />
+                  <p>
+                    Select the number of travellers and assign accommodation to
+                    display the price.
+                  </p>
+                </div>
+              ) : (
+                <div className="mt-5">
+                  <div className="pb-5 space-y-3 border-b">
+                    {priceData.items.map((item) => (
+                      <div
+                        key={item.accommodation}
+                        className="flex justify-between"
+                      >
+                        <div className="flex flex-col">
+                          <h3>
+                            {
+                              packageData.accommodations.find(
+                                (data) => data.id == item.accommodation
+                              ).title
+                            }
+                          </h3>
+                          {/* <span className="text-sm text-gray-500">
+                            1 Adult x $9,730.25
+                          </span> */}
+                        </div>
+                        {/* <div>
+                          <span>$9,730.25</span>
+                        </div> */}
+                      </div>
+                    ))}
                   </div>
-                  <div>
-                    <span>$9,730.25</span>
+
+                  <div className="mt-5 space-y-3">
+                    <div className="flex justify-between ">
+                      <h3 className="text-lg">Subtotal</h3>
+                      <h2 className="text-lg font-semibold">
+                        ${parseInt(priceData.sub_amount).toLocaleString()}
+                      </h2>
+                    </div>
+                    <div className="flex justify-between ">
+                      <h3 className="text text-slate-500">Maintenance Cost</h3>
+                      <h2 className="font-semibold text-slate-500">
+                        ${parseInt(priceData.maintenance_cost).toLocaleString()}
+                      </h2>
+                    </div>
+                    {Boolean(priceData.discount_amount) && (
+                      <div className="flex justify-between ">
+                        <h3 className="text text-slate-500">Discount Amount</h3>
+                        <h2 className="font-semibold text-slate-500">
+                          $
+                          {parseInt(priceData.discount_amount).toLocaleString()}
+                        </h2>
+                      </div>
+                    )}
+
+                    <div className="flex justify-between ">
+                      <h3 className="text-lg">Total</h3>
+                      <h2 className="text-lg font-semibold">
+                        ${parseInt(priceData.total_amount).toLocaleString()}
+                      </h2>
+                    </div>
                   </div>
                 </div>
-
-                <div className="flex justify-between mt-5">
-                  <h3 className="text-lg">Single Room</h3>
-                  <h2 className="text-lg font-semibold">US$9,730.25</h2>
-                </div>
-              </div> */}
+              )}
             </div>
           </div>
 
@@ -279,39 +423,59 @@ function BookingPageComponent({ packageData }) {
                         />
                       </div>
                       <div className="flex flex-col gap-3 min-w-64">
-                        {accommodation.guest_types.map((data) => (
-                          <div
-                            key={data.guest_type}
-                            className="flex justify-between min-w-64"
-                          >
-                            <div>
-                              <h5 className="font-bold leading-normal ">
-                                ${parseInt(data.price).toLocaleString()}
-                              </h5>
-                              <p className="text-xs">per {data.guest_type}</p>
-                            </div>
-                            <div>
-                              <select
-                                aria-disabled={false}
-                                className="w-32 px-5 py-3 bg-transparent border border-gray-400 rounded-lg aria-disabled:bg-gray-200 aria-disabled:text-gray-500 aria-disabled:border-gray-400"
-                              >
-                                <option select>0 Adult</option>
+                        {accommodation.guest_types.map((data) => {
+                          return (
+                            <div
+                              key={data.guest_type}
+                              className="flex justify-between min-w-64"
+                            >
+                              <div>
+                                <h5 className="font-bold leading-normal ">
+                                  ${parseInt(data.price).toLocaleString()}
+                                </h5>
+                                <p className="text-xs">
+                                  per {capitalizeText(data.guest_type)}
+                                </p>
+                              </div>
+                              <div>
+                                <select
+                                  aria-disabled={false}
+                                  value={getSelectedTravellers(
+                                    accommodation.id,
+                                    data.guest_type
+                                  )}
+                                  onChange={(e) =>
+                                    updateSelectedAccommodation(
+                                      accommodation.id,
+                                      data.guest_type,
+                                      parseInt(e.target.value)
+                                    )
+                                  }
+                                  className="w-32 px-5 py-3 bg-transparent border border-gray-400 rounded-lg aria-disabled:bg-gray-200 aria-disabled:text-gray-500 aria-disabled:border-gray-400"
+                                >
+                                  <option>
+                                    0 {capitalizeText(data.guest_type)}
+                                  </option>
 
-                                {Array.from(
-                                  {
-                                    length: travellers.find(
-                                      (traveller) =>
-                                        traveller.guest_type == data.guest_type
-                                    ).count,
-                                  },
-                                  (_, i) => i + 1
-                                ).map((num) => (
-                                  <option key={num}>{num} Adult</option>
-                                ))}
-                              </select>
+                                  {Array.from(
+                                    {
+                                      length: travellers.find(
+                                        (traveller) =>
+                                          traveller.guest_type ==
+                                          data.guest_type
+                                      ).count,
+                                    },
+                                    (_, i) => i + 1
+                                  ).map((num) => (
+                                    <option key={num} value={num}>
+                                      {num} {data.guest_type}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
                             </div>
-                          </div>
-                        ))}
+                          );
+                        })}
                       </div>
                     </div>
                   </div>

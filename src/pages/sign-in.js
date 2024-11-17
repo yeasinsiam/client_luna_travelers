@@ -35,7 +35,7 @@ export default function SignInPage() {
         .then((response) => {
           console.log(response.data);
           toast.success("Welcome , Sign in successful.");
-          router.push("/booking");
+          router.push("/");
         })
         .catch((error) => {
           console.error(error);

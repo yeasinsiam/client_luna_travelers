@@ -205,7 +205,7 @@ function PriceWidget({ setShowAskQuestionPopup, tourData }) {
       <div className="py-5 space-y-3 border-gray-300 border-y">
         <select
           value={selectedPackage}
-          onChange={(e) => selectedPackage(parseInt(e.target.value))}
+          onChange={(e) => setSelectedPackage(parseInt(e.target.value))}
           className="w-full h-10 px-3 py-2 bg-transparent border border-gray-400 rounded-md outline-none form-select dark:bg-slate-900 dark:text-slate-200 dark:border-gray-800 focus:ring-0 "
         >
           {tourData.packages.map((data) => (

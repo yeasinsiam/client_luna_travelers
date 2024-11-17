@@ -17,16 +17,21 @@ export default function SignUpPage() {
 
   const registerFormFormik = useFormik({
     initialValues: {
-      //   name: "",
-      //   email: "",
+      first_name: "",
+      last_name: "",
+      email: "",
       //   phoneNumber: "",
       username: "",
       password: "",
       confirm_password: "",
     },
     validationSchema: yup.object().shape({
-      //   name: yup.string().required("First name is required."),
-      //   email: yup.string().email("Please enter a valid email."),
+      first_name: yup.string().required("First name is required."),
+      last_name: yup.string().required("Last name is required."),
+      email: yup
+        .string()
+        .email("Please enter a valid email.")
+        .required("Email is required."),
       //   phoneNumber: yup
       //     .string()
       //     .required("Phone number is required.")
@@ -44,20 +49,23 @@ export default function SignUpPage() {
         .oneOf([yup.ref("password"), null], "Passwords must match.")
         .required("Confirm Password is required."),
     }),
-    onSubmit: ({ username, password }) => {
+    onSubmit: ({ first_name, last_name, email, username, password }) => {
       setIsFormLoading(true);
 
       const loadingToast = toast.loading("Signing up please wait...");
       axios
         .post("/auth/register/", {
           username,
+          email,
+          first_name,
+          last_name,
           password1: password,
           password2: password,
         })
         .then((response) => {
           console.log(response.data);
           toast.success("Your account is created, Please login now.");
-          router.push("/login");
+          router.push("/sign-in");
         })
         .catch((error) => {
           console.error(error);
@@ -91,7 +99,7 @@ export default function SignUpPage() {
       ></div>
       <div className="container relative z-3">
         <div className="flex justify-center">
-          <div className="max-w-[400px] w-full m-auto p-6 bg-white dark:bg-slate-900 shadow-md dark:shadow-gray-700 rounded-md">
+          <div className="max-w-[500px] w-full m-auto p-6 bg-white dark:bg-slate-900 shadow-md dark:shadow-gray-700 rounded-md">
             <Link href="/">
               <Image src={logo} className="mx-auto" alt="" />
             </Link>
@@ -100,8 +108,74 @@ export default function SignUpPage() {
               className="text-start"
               onSubmit={registerFormFormik.handleSubmit}
             >
-              <div className="grid grid-cols-1">
-                <div className="mb-4">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                <div className="">
+                  <label className="font-semibold">First Name:</label>
+                  <input
+                    type="text"
+                    aria-invalid={
+                      registerFormFormik.errors.first_name &&
+                      registerFormFormik.touched.first_name
+                    }
+                    className=" aria-[invalid='true']:border-red-500 aria-[invalid='true']:text-red-500 w-full h-10 px-3 py-2 mt-3 bg-transparent border border-gray-100 rounded outline-none aria- dark:bg-slate-900 dark:text-slate-200 dark:border-gray-800 focus:ring-0"
+                    placeholder="Enter your First Name"
+                    name="first_name"
+                    onChange={registerFormFormik.handleChange}
+                    onBlur={registerFormFormik.handleBlur}
+                    value={registerFormFormik.values.first_name}
+                  />
+                  {registerFormFormik.errors.first_name &&
+                    registerFormFormik.touched.first_name && (
+                      <span className="text-red-500">
+                        {registerFormFormik.errors.first_name}
+                      </span>
+                    )}
+                </div>
+                <div className="">
+                  <label className="font-semibold">Last Name:</label>
+                  <input
+                    type="text"
+                    aria-invalid={
+                      registerFormFormik.errors.last_name &&
+                      registerFormFormik.touched.last_name
+                    }
+                    className=" aria-[invalid='true']:border-red-500 aria-[invalid='true']:text-red-500 w-full h-10 px-3 py-2 mt-3 bg-transparent border border-gray-100 rounded outline-none aria- dark:bg-slate-900 dark:text-slate-200 dark:border-gray-800 focus:ring-0"
+                    placeholder="Enter your Last Name"
+                    name="last_name"
+                    onChange={registerFormFormik.handleChange}
+                    onBlur={registerFormFormik.handleBlur}
+                    value={registerFormFormik.values.last_name}
+                  />
+                  {registerFormFormik.errors.last_name &&
+                    registerFormFormik.touched.last_name && (
+                      <span className="text-red-500">
+                        {registerFormFormik.errors.last_name}
+                      </span>
+                    )}
+                </div>
+                <div className="">
+                  <label className="font-semibold">Email:</label>
+                  <input
+                    type="text"
+                    aria-invalid={
+                      registerFormFormik.errors.email &&
+                      registerFormFormik.touched.email
+                    }
+                    className=" aria-[invalid='true']:border-red-500 aria-[invalid='true']:text-red-500 w-full h-10 px-3 py-2 mt-3 bg-transparent border border-gray-100 rounded outline-none aria- dark:bg-slate-900 dark:text-slate-200 dark:border-gray-800 focus:ring-0"
+                    placeholder="Enter your email"
+                    name="email"
+                    onChange={registerFormFormik.handleChange}
+                    onBlur={registerFormFormik.handleBlur}
+                    value={registerFormFormik.values.email}
+                  />
+                  {registerFormFormik.errors.email &&
+                    registerFormFormik.touched.email && (
+                      <span className="text-red-500">
+                        {registerFormFormik.errors.email}
+                      </span>
+                    )}
+                </div>
+                <div className="">
                   <label className="font-semibold">Username:</label>
                   <input
                     type="text"
@@ -123,7 +197,7 @@ export default function SignUpPage() {
                       </span>
                     )}
                 </div>
-                {/* <div className="mb-4">
+                {/* <div className="">
                   <label className="font-semibold" htmlFor="RegisterName">
                     Your Name:
                   </label>
@@ -136,7 +210,7 @@ export default function SignUpPage() {
                   />
                 </div>
 
-                <div className="mb-4">
+                <div className="">
                   <label className="font-semibold" htmlFor="LoginEmail">
                     Email Address:
                   </label>
@@ -149,7 +223,7 @@ export default function SignUpPage() {
                   />
                 </div> */}
 
-                <div className="mb-4">
+                <div className="">
                   <label className="font-semibold">Password:</label>
                   <input
                     type="password"
@@ -171,7 +245,7 @@ export default function SignUpPage() {
                       </span>
                     )}
                 </div>
-                <div className="mb-4">
+                <div className="">
                   <label className="font-semibold">Confirm Password:</label>
                   <input
                     type="password"
@@ -194,46 +268,48 @@ export default function SignUpPage() {
                     )}
                 </div>
 
-                <div className="mb-4">
-                  <div className="flex items-center w-full mb-0">
-                    <input
-                      className="text-red-500 border-gray-400 rounded form-checkbox dark:border-gray-800 focus:border-red-300 focus:ring focus:ring-offset-0 focus:ring-red-500/20 focus:ring-opacity-50 me-2"
-                      type="checkbox"
-                      required
-                      id="AcceptT&amp;C"
-                    />
-                    <label
-                      className="form-check-label text-slate-400"
-                      htmlFor="AcceptT&amp;C"
-                    >
-                      I Accept{" "}
-                      <Link href="" className="text-red-500">
-                        Terms And Condition
-                      </Link>
-                    </label>
+                <div className="space-y-3 md:col-span-2">
+                  <div className="">
+                    <div className="flex items-center w-full mb-0">
+                      <input
+                        className="text-red-500 border-gray-400 rounded form-checkbox dark:border-gray-800 focus:border-red-300 focus:ring focus:ring-offset-0 focus:ring-red-500/20 focus:ring-opacity-50 me-2"
+                        type="checkbox"
+                        required
+                        id="AcceptT&amp;C"
+                      />
+                      <label
+                        className="form-check-label text-slate-400"
+                        htmlFor="AcceptT&amp;C"
+                      >
+                        I Accept{" "}
+                        <Link href="" className="text-red-500">
+                          Terms And Condition
+                        </Link>
+                      </label>
+                    </div>
                   </div>
-                </div>
 
-                <div className="mb-4">
-                  <button
-                    type="submit"
-                    disabled={isFormLoading}
-                    className="inline-block w-full px-5 py-2 text-base tracking-wide text-center text-white align-middle duration-500 bg-red-500 rounded-md"
-                  >
-                    Register
-                  </button>
-                </div>
+                  <div className="">
+                    <button
+                      type="submit"
+                      disabled={isFormLoading}
+                      className="inline-block w-full px-5 py-2 text-base tracking-wide text-center text-white align-middle duration-500 bg-red-500 rounded-md"
+                    >
+                      Register
+                    </button>
+                  </div>
 
-                <div className="text-center">
-                  <span className="text-slate-400 me-2">
-                    Already have an account ?{" "}
-                  </span>{" "}
-                  <Link
-                    href="/sign-in"
-                    className="inline-block font-bold text-black dark:text-white"
-                  >
-                    Sign in
-                  </Link>
+                  <div className="text-center">
+                    <span className="text-slate-400 me-2">
+                      Already have an account ?{" "}
+                    </span>{" "}
+                    <Link
+                      href="/sign-in"
+                      className="inline-block font-bold text-black dark:text-white"
+                    >
+                      Sign in
+                    </Link>
+                  </div>
                 </div>
               </div>
             </form>

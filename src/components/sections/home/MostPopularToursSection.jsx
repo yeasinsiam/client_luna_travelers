@@ -61,7 +61,10 @@ export default function MostPopularToursSection({ tours }) {
                       {item.destination.name}
                     </p>
                     <Link
-                      href={`/tour-detail-one/${item.id}`}
+                      href={{
+                        pathname: "/tours/[tourId]",
+                        query: { tourId: item.id },
+                      }}
                       className="text-lg font-medium duration-500 ease-in-out hover:text-red-500"
                     >
                       {item.title}
@@ -118,12 +121,12 @@ export default function MostPopularToursSection({ tours }) {
         </div>
 
         <div className="mt-6 text-center">
-          <Link
+          {/* <Link
             href="/grid-right-sidebar"
             className="inline-block text-slate-400 hover:text-red-500"
           >
             See More Tours <i className="align-middle mdi mdi-arrow-right"></i>
-          </Link>
+          </Link> */}
         </div>
       </div>
     </section>

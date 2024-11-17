@@ -97,7 +97,7 @@ export default function MostPopularToursSection({ tours }) {
 
                     <div className="flex items-center justify-between pt-4 mt-4 border-t border-slate-100 dark:border-gray-800">
                       <h5 className="text-lg font-medium text-red-500">
-                        {parseInt(item.price).toLocaleString()}
+                        ${parseInt(item.price).toLocaleString()}
                       </h5>
 
                       <Link

@@ -3,8 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { FiMapPin } from "react-icons/fi";
+import useSWR from "swr";
 
-export default function MostPopularToursSection() {
+export default function MostPopularToursSection({ tours }) {
   return (
     <section className="relative py-8 overflow-hidden md:py-12">
       <div className="container relative ">
@@ -20,7 +21,7 @@ export default function MostPopularToursSection() {
         </div>
 
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-          {packages.slice(0, 8).map((item, index) => {
+          {tours.slice(0, 8).map((item, index) => {
             return (
               <div
                 className="rounded-md shadow group dark:shadow-gray-700"
@@ -28,18 +29,21 @@ export default function MostPopularToursSection() {
               >
                 <div className="md:flex md:items-center">
                   <div className="relative mx-3 mt-3 overflow-hidden shadow md:shrink-0 md:rounded-md rounded-t-md dark:shadow-gray-700 md:m-3">
-                    <Image
-                      src={item.image}
-                      className="object-cover w-full h-full duration-500 scale-125 md:w-48 md:h-56 group-hover:scale-100"
-                      alt=""
-                    />
-                    {item.tagText && (
+                    <div className="w-48 h-56">
+                      <Image
+                        src={item.banner_image}
+                        className="object-cover w-full h-full duration-500 scale-125 group-hover:scale-100"
+                        alt=""
+                        fill
+                      />
+                    </div>
+                    {/* {item.tagText && (
                       <div className="absolute top-0 p-4 start-0">
                         <span className="bg-red-500 text-white text-[12px] px-2.5 py-1 font-medium rounded-md h-5">
                           {item.tagText}
                         </span>
                       </div>
-                    )}
+                    )} */}
 
                     {/* <div className="absolute top-0 p-4 end-0">
                       <Link
@@ -54,7 +58,7 @@ export default function MostPopularToursSection() {
                   <div className="w-full p-4">
                     <p className="flex items-center mb-2 font-medium text-slate-400">
                       <FiMapPin className="text-red-500 size-4 me-1"></FiMapPin>{" "}
-                      {item.place}
+                      {item.destination.name}
                     </p>
                     <Link
                       href={`/tour-detail-one/${item.id}`}
@@ -93,11 +97,14 @@ export default function MostPopularToursSection() {
 
                     <div className="flex items-center justify-between pt-4 mt-4 border-t border-slate-100 dark:border-gray-800">
                       <h5 className="text-lg font-medium text-red-500">
-                        {item.amount}
+                        {parseInt(item.price).toLocaleString()}
                       </h5>
 
                       <Link
-                        href="#"
+                        href={{
+                          pathname: "/tours/[tourId]",
+                          query: { tourId: item.id },
+                        }}
                         className="text-slate-400 hover:text-red-500"
                       >
                         Explore Now <i className="mdi mdi-arrow-right"></i>

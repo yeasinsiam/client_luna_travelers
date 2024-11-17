@@ -9,13 +9,25 @@ import TopDestinationSection from "@/components/sections/home/TopDestinationSect
 import ClientsTestimonialSection from "@/components/sections/home/ClientsTestimonialSection";
 import ServicesSection from "@/components/sections/home/ServicesSection";
 import FaqSection from "@/components/sections/home/FaqSection";
+import useSWR from "swr";
+import PageLoading from "@/components/PageLoading";
 
 export default function Index() {
+  const {
+    data: toursData,
+    error: toursDataError,
+    isLoading: toursDataLoading,
+  } = useSWR(`/tours/`, {
+    revalidateIfStale: false,
+  });
+
+  console.log(toursData);
+  if (!toursData) return <PageLoading />;
   return (
     <Layout>
       <HomeHeroSliderSection />
 
-      <MostPopularToursSection />
+      <MostPopularToursSection tours={toursData.results} />
 
       <TopDestinationSection />
 
